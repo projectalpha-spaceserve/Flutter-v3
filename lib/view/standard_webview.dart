@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 import 'dart:io';
 
@@ -20,8 +19,8 @@ class StandardWebView extends StatefulWidget {
   State<StandardWebView> createState() => _StandardWebViewAppState();
 }
 
+// ignore: deprecated_member_use_from_same_package
 class _StandardWebViewAppState extends State<StandardWebView> {
-
   @override
   void initState() {
     if (Platform.isAndroid) {
@@ -32,7 +31,6 @@ class _StandardWebViewAppState extends State<StandardWebView> {
 
   @override
   Widget build(BuildContext context) {
-
     final Set<Factory<OneSequenceGestureRecognizer>> gestureRecognizers = {
       Factory(() => EagerGestureRecognizer())
     };
@@ -49,21 +47,20 @@ class _StandardWebViewAppState extends State<StandardWebView> {
       );
     }
 
-      return SafeArea(
-          child: Scaffold(
-            key: _key,
-            appBar: appBar,
-            body: WebView(
-              initialUrl: widget.url,
-              javascriptMode:  JavascriptMode.unrestricted,
-              gestureRecognizers: gestureRecognizers,
-              onPageStarted: (webUrl) {
-                final url = Uri.parse(webUrl);
-                _processUrl(url);
-              },
-            ),
-          )
-      );
+    return SafeArea(
+        child: Scaffold(
+      key: _key,
+      appBar: appBar,
+      body: WebView(
+        initialUrl: widget.url,
+        javascriptMode: JavascriptMode.unrestricted,
+        gestureRecognizers: gestureRecognizers,
+        onPageStarted: (webUrl) {
+          final url = Uri.parse(webUrl);
+          _processUrl(url);
+        },
+      ),
+    ));
   }
 
   _processUrl(Uri uri) {
@@ -106,8 +103,7 @@ class _StandardWebViewAppState extends State<StandardWebView> {
         status: status,
         transactionId: "$id",
         txRef: txRef,
-        success: status?.contains("success") == true
-    );
+        success: status?.contains("success") == true);
     Navigator.pop(context, chargeResponse);
   }
 
@@ -116,11 +112,10 @@ class _StandardWebViewAppState extends State<StandardWebView> {
     final txRef = uri.queryParameters["tx_ref"];
     final id = uri.queryParameters["transaction_id"];
     final ChargeResponse chargeResponse = ChargeResponse(
-      status: status,
-      transactionId: id,
-      txRef: txRef,
-      success: status?.contains("success") == true
-    );
+        status: status,
+        transactionId: id,
+        txRef: txRef,
+        success: status?.contains("success") == true);
     Navigator.pop(context, chargeResponse);
   }
 }

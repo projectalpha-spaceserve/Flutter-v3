@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutterwave_standard/flutterwave.dart';
 import 'package:uuid/uuid.dart';
+import 'package:flutterwave_standard/flutterwave.dart';
 
 void main() {
   runApp(MyApp());
@@ -64,7 +64,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   style: TextStyle(color: Colors.black),
                   decoration: InputDecoration(hintText: "Amount"),
                   validator: (value) =>
-                      value.isNotEmpty ? null : "Amount is required",
+                      value!.isNotEmpty ? null : "Amount is required",
                 ),
               ),
               Container(
@@ -79,7 +79,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     hintText: "Currency",
                   ),
                   validator: (value) =>
-                      value.isNotEmpty ? null : "Currency is required",
+                      value!.isNotEmpty ? null : "Currency is required",
                 ),
               ),
               Container(
@@ -165,7 +165,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   _onPressed() {
-    if (this.formKey.currentState.validate()) {
+    if (this.formKey.currentState!.validate()) {
       this._handlePaymentInitialization();
     }
   }
@@ -187,12 +187,8 @@ class _MyHomePageState extends State<MyHomePage> {
         customization: Customization(title: "Test Payment"),
         isTestMode: this.isTestMode);
     final ChargeResponse response = await flutterwave.charge();
-    if (response != null) {
-      this.showLoading(response.toString());
-      print("${response.toJson()}");
-    } else {
-      this.showLoading("No Response!");
-    }
+    this.showLoading(response.toString());
+    print("${response.toJson()}");
   }
 
   String getPublicKey() {
